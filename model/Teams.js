@@ -6,22 +6,26 @@ var TeamSchema= new mongoose.Schema({
         required:true,
         minlength:1
     },
-    TeamMemebers:{
+    TeamMembers:{
         type:String,
         required:true,
         minlength:4
     },
     TeamScore:{
-        type:Number
+        type:Number,
+        default:0
     },
     QuestionsAttempted:{
-        type:Number
+        type:Number,
+        default:0
     },
     AnsweredPassedQuestions:{
-        type:Number
+        type:Number,
+        default:0
     },
     AnswersCorrect:{
-        type:Number
+        type:Number,
+        default:0
     }
 })
 

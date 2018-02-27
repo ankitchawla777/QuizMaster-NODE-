@@ -3,6 +3,7 @@ const { ObjectId } = require('mongodb');
 const _ = require('lodash');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const Random = require('random-js')();
 
 const { Question } = require('./model/Questions');
 const { User } = require('./model/users');
@@ -29,7 +30,7 @@ app.get('/users', (req, res) => {
 })
 //GET /users:id
 app.get('/users/:id', (req, res) => {
-    var id = req.params.id;
+    let id = req.params.id;
     if (!ObjectId.isValid(id)) {
         res.send(400).send();
     }
@@ -48,9 +49,9 @@ app.get('/users/:id', (req, res) => {
 })
 //POST /users
 app.post('/users', (req, res) => {
-    var body = _.pick(req.body, ['email', 'password', 'isAdmin']);
+    let body = _.pick(req.body, ['email', 'password', 'isAdmin']);
     // console.log(JSON.stringify(body))
-    var user = new User(body);
+    let user = new User(body);
     user.save().then((user) => {
         if (!user) {
             res.status(404).send();
@@ -62,8 +63,8 @@ app.post('/users', (req, res) => {
 })
 //PATCH /users/:id
 app.patch('/users/:id', (req, res) => {
-    var id = req.params.id;
-    var body = _.pick(req.body, ['email', 'password', 'isAdmin']);
+    let id = req.params.id;
+    let body = _.pick(req.body, ['email', 'password', 'isAdmin']);
     if (!ObjectId.isValid(id)) {
         res.send(400).send();
     }
@@ -78,7 +79,7 @@ app.patch('/users/:id', (req, res) => {
 })
 //DELETE /users/:id
 app.delete('/users/:id', (req, res) => {
-    var id = req.params.id;
+    let id = req.params.id;
     if (!ObjectId.isValid(id)) {
         res.send(400).send();
     }
@@ -93,7 +94,7 @@ app.delete('/users/:id', (req, res) => {
 })
 //POST /login
 app.post('/login', (req, res) => {
-    var body = _.pick(req.body, ['email', 'password']);
+    let body = _.pick(req.body, ['email', 'password']);
     User.findByCredentials(body.email, body.password).then((user) => {
         if (!user.email) {
             res.status(404).send();
@@ -121,7 +122,7 @@ app.get('/teams', (req, res) => {
 })
 //GET /teams:id
 app.get('/teams/:id', (req, res) => {
-    var id = req.params.id;
+    let id = req.params.id;
     if (!ObjectId.isValid(id)) {
         res.send(400).send();
     }
@@ -140,9 +141,9 @@ app.get('/teams/:id', (req, res) => {
 })
 //POST /teams
 app.post('/teams', (req, res) => {
-    var body = _.pick(req.body, ['TeamName', 'TeamMemebers', 'TeamScore', 'QuestionsAttempted', 'AnsweredPassedQuestions', 'AnswersCorrect']);
+    let body = _.pick(req.body, ['TeamName', 'TeamMembers', 'TeamScore', 'QuestionsAttempted', 'AnsweredPassedQuestions', 'AnswersCorrect']);
     // console.log(JSON.stringify(body))
-    var team = new Team(body);
+    let team = new Team(body);
     team.save().then((team) => {
         if (!team) {
             res.status(404).send();
@@ -154,8 +155,8 @@ app.post('/teams', (req, res) => {
 })
 //PATCH /teams/:id
 app.patch('/teams/:id', (req, res) => {
-    var id = req.params.id;
-    var body = _.pick(req.body, ['TeamName', 'TeamMemebers', 'TeamScore', 'QuestionsAttempted', 'AnsweredPassedQuestions', 'AnswersCorrect']);
+    let id = req.params.id;
+    let body = _.pick(req.body, ['TeamName', 'TeamMembers', 'TeamScore', 'QuestionsAttempted', 'AnsweredPassedQuestions', 'AnswersCorrect']);
     if (!ObjectId.isValid(id)) {
         res.send(400).send();
     }
@@ -170,7 +171,7 @@ app.patch('/teams/:id', (req, res) => {
 })
 //DELETE /teams/:id
 app.delete('/teams/:id', (req, res) => {
-    var id = req.params.id;
+    let id = req.params.id;
     if (!ObjectId.isValid(id)) {
         res.send(400).send();
     }
@@ -197,7 +198,7 @@ app.get('/questions', (req, res) => {
 })
 //GET /questions:id
 app.get('/questions/:id', (req, res) => {
-    var id = req.params.id;
+    let id = req.params.id;
     if (!ObjectId.isValid(id)) {
         res.send(400).send();
     }
@@ -216,9 +217,9 @@ app.get('/questions/:id', (req, res) => {
 })
 //POST /questions
 app.post('/questions', (req, res) => {
-    var body = _.pick(req.body, ['Ques', 'OptionOne', 'OptionTwo', 'OptionThree', 'OptionFour', 'Answer', 'QuestionType']);
+    let body = _.pick(req.body, ['Ques', 'OptionOne', 'OptionTwo', 'OptionThree', 'OptionFour', 'Answer', 'QuestionType']);
     // console.log(JSON.stringify(body))
-    var question = new Question(body);
+    let question = new Question(body);
     question.save().then((question) => {
         if (!question) {
             res.status(404).send();
@@ -230,8 +231,8 @@ app.post('/questions', (req, res) => {
 })
 //PATCH /questions/:id
 app.patch('/questions/:id', (req, res) => {
-    var id = req.params.id;
-    var body = _.pick(req.body, ['Ques', 'OptionOne', 'OptionTwo', 'OptionThree', 'OptionFour', 'Answer', 'QuestionType']);
+    let id = req.params.id;
+    let body = _.pick(req.body, ['Ques', 'OptionOne', 'OptionTwo', 'OptionThree', 'OptionFour', 'Answer', 'QuestionType']);
     if (!ObjectId.isValid(id)) {
         res.send(400).send();
     }
@@ -246,7 +247,7 @@ app.patch('/questions/:id', (req, res) => {
 })
 //DELETE /questions/:id
 app.delete('/questions/:id', (req, res) => {
-    var id = req.params.id;
+    let id = req.params.id;
     if (!ObjectId.isValid(id)) {
         res.send(400).send();
     }
@@ -260,37 +261,82 @@ app.delete('/questions/:id', (req, res) => {
     }).catch(e => res.status(400).send(e));
 })
 //GET /random
-app.get('/random', (req, res) => {
-    var count;
-    Question.count().exec((err, c) => {
-        if (err)
-            res.status(400).send(err);
-        var rand = Math.floor(Math.random() * c);
-        var randQues;
-        console.log(req.session.ignore.length, c)
-        if (req.session.ignore.length < c) {
-            console.log(req.session.ignore)
-            Question.findOne().skip(rand).then((question) => {
-                randQues=question;
-                console.log(JSON.stringify(randQues._id));
-                console.log("STATUS:"+req.session.ignore.includes(randQues._id.toString()))
-                if(req.session.ignore.includes(randQues._id.toString())) {
-                    var random = Math.floor(Math.random() * c);
-                    debugger;
-                    Question.findOne().skip(random).then( question=>{ console.log(question);
-                        randQues = question
-                    }).catch((e) => res.send(e));
+app.get('/random/:type', (req, res) => {
+    let QuestionType = req.params.type;
+    if (!req.session.ignore) {
+        res.status(401).send({ message: "Please Login first" });
+    }
+    else {
+        Question.count({ QuestionType }).exec((err, c) => {
+            if (err)
+                res.status(400).send(err);
+            let randQues;
+            if (req.session.ignore.length < c) {
+                let rand = Random.integer(0, c - 1);
+                while (req.session.ignore.includes(rand)) {
+                    rand = Random.integer(0, c - 1);
                 }
-                console.log(JSON.stringify(randQues))
-                req.session.ignore.push(randQues._id);
-                res.send({ randQues })
-            }).catch((e) => res.send(e))
-           
-        }
-        // console.log(JSON.stringify(req.session.user));
-        else
-            res.status(404).send({ message: "Quiz Over" });
-    });
-})
+                Question.findOne({ QuestionType }).skip(rand).then((question) => {
+                    randQues = question;
+                    req.session.ignore.push(rand);
+                    res.send({ randQues })
+                }).catch((e) => res.send(e))
 
+            }
+            else
+                res.status(404).send({ message: "Quiz Over" });
+        });
+    }
+})
+//GET /reset        ----------->rests ignore list to empty
+app.get('/reset', (req, res) => {
+    req.session.ignore = [];
+    res.send({ message: "Reset Successfull" });
+})
+//GET /check        ----------->checks the answer and updates the score
+app.post('/check', (req, res) => {
+    let qId = req.body.qId;
+    let tId = req.body.tId;
+    let answer = req.body.answer;
+    let PassFLAG = req.body.PassFLAG;
+  
+    Team.findById(tId).then((team) => {
+        Question.findById(qId).then((question) => {
+            if ((!question) || (!team)) {
+                res.status(400).send("Error");
+            }
+            else if(question.Answer===answer)
+            {
+                if(PassFLAG==0)
+                {
+                    let body={
+                        QuestionsAttempted : team.QuestionsAttempted+1,
+                        AnswersCorrect: team.AnswersCorrect+1,
+                        TeamScore: team.TeamScore + 10
+                    }
+                    Team.findByIdAndUpdate(tId,{$set:body},{new :true}).then(()=>res.send({message:"Correct Answer"})).catch((e)=>res.status(500).send(e))
+                }
+                else if(PassFLAG==1)
+                {
+                    let body={
+                        QuestionsAttempted : team.QuestionsAttempted+1,
+                        AnswersCorrect: team.AnswersCorrect+1,
+                        AnsweredPassedQuestions: team.AnsweredPassedQuestions+1,
+                        TeamScore: team.TeamScore + 5
+                    }
+                    Team.findByIdAndUpdate(tId,{$set:body},{new :true}).then(()=>res.send({message:"Correct Answer"})).catch((e)=>res.status(500).send(e))
+                }
+            }
+            else
+            {
+                Team.findByIdAndUpdate(tId,{$set: {QuestionsAttempted:team.QuestionsAttempted+1}},{new :true}).then((team,err)=>{
+                    res.send({message:"Wrong Answer"});
+                    if(err)
+                    console.log(err)
+                }).catch((e)=>res.status(500).send(e))
+            }
+        }).catch((e) => res.status(404).send(JSON.stringify(e)));
+    }).catch((e) => res.status(404).send(JSON.stringify(e)));
+    
+})
 app.listen(3000, () => console.log("app started at port:3000"));

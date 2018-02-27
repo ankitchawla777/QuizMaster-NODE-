@@ -39,19 +39,5 @@ var QuestionSchema = new mongoose.Schema({
     }
 }) 
 
-// QuestionSchema.statics.Random=function(QuestionType) {
-//     var Question=this;
-//     Question.count().exec(function(err, count){
-
-//         var random = Math.floor(Math.random() * count);
-      
-//         Model.findOne().skip(random).exec(
-//           function (err, result) {
-      
-//         });
-      
-//       });
-//   };
-
 var Question=mongoose.model('Question',QuestionSchema);
 module.exports={Question}
