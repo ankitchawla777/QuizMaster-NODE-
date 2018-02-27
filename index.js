@@ -1,3 +1,4 @@
+require('./config/config')
 const express = require('express');
 const { ObjectId } = require('mongodb');
 const _ = require('lodash');
@@ -9,6 +10,8 @@ const { Question } = require('./model/Questions');
 const { User } = require('./model/users');
 const { Team } = require('./model/Teams')
 const { mongoose } = require('./db/mongoose');
+
+const port= process.env.PORT ;
 
 app = express();
 app.use(bodyParser.json());
@@ -339,4 +342,4 @@ app.post('/check', (req, res) => {
     }).catch((e) => res.status(404).send(JSON.stringify(e)));
     
 })
-app.listen(3000, () => console.log("app started at port:3000"));
+app.listen(port, () => console.log(`app started at port:${port}`));
