@@ -32,7 +32,7 @@ var QuestionSchema = new mongoose.Schema({
         required:true,
         minlength:1
     },
-    QuestionType:{
+    Category:{
         type:String,
         required:true,
         minlength:1
